@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 TAMI 數據大賽 | 試做賽 R1</title>
+    <title>2026 TWM 數據大賽｜TAMI 應用組</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -11,6 +11,7 @@
             --card-bg: #161b22;
             --primary-blue: #58a6ff;
             --accent-green: #3fb950;
+            --warning-red: #f85149;
             --text-main: #c9d1d9;
             --text-dim: #8b949e;
             --border-color: #30363d;
@@ -25,7 +26,6 @@
             line-height: 1.6;
         }
 
-        /* Header Area */
         header {
             background: linear-gradient(90deg, #0d1117 0%, #161b22 100%);
             padding: 40px 20px;
@@ -58,20 +58,81 @@
             font-size: 15px;
         }
 
-        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
+        /* --- New: Submission Protocol Section --- */
+        .protocol-box {
+            background: rgba(56, 139, 253, 0.05);
+            border: 1px solid var(--primary-blue);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .protocol-title {
+            color: var(--primary-blue);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .protocol-title i { margin-right: 10px; }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .protocol-item {
+            font-size: 14px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .protocol-item i { color: var(--accent-green); margin-top: 4px; }
+
+        .important-note { color: var(--warning-red); font-weight: bold; }
+
+        /* SubID Table Styles */
+        .format-example {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .subid-table {
+            border-collapse: collapse;
+            font-size: 12px;
+            background: #0d1117;
+        }
+        .subid-table th, .subid-table td {
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            text-align: left;
+        }
+        .subid-table th { background: #161b22; color: var(--text-dim); }
+        .arrow-icon { color: var(--primary-blue); font-size: 20px; }
+
+        /* --- Task Cards --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
         }
 
-        /* Task Cards */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -101,21 +162,9 @@
             float: right;
         }
 
-        .card-content {
-            padding: 20px;
-        }
-
-        .venue-name {
-            font-size: 14px;
-            color: var(--accent-green);
-            margin-bottom: 5px;
-        }
-
-        .event-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+        .card-content { padding: 20px; }
+        .venue-name { font-size: 14px; color: var(--accent-green); margin-bottom: 5px; }
+        .event-title { font-size: 20px; font-weight: bold; margin-bottom: 15px; }
 
         .info-row {
             display: flex;
@@ -125,13 +174,8 @@
             color: var(--text-dim);
         }
 
-        .info-row i {
-            width: 20px;
-            margin-right: 10px;
-            color: var(--primary-blue);
-        }
+        .info-row i { width: 20px; margin-right: 10px; color: var(--primary-blue); }
 
-        /* Criteria Section */
         .criteria-box {
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
@@ -159,10 +203,10 @@
         .criteria-label { color: var(--text-dim); }
         .criteria-value { color: var(--primary-blue); font-weight: 500; }
 
-        /* Map Placeholder */
+        /* 修改原本的 .map-preview 樣式 */
         .map-preview {
             width: 100%;
-            height: 150px;
+            min-height: 120px; /* 設定最小高度 */
             background: #21262d;
             margin-top: 15px;
             border-radius: 6px;
@@ -171,8 +215,20 @@
             justify-content: center;
             color: var(--text-dim);
             font-size: 12px;
-            border: 1px dashed var(--border-color);
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMC41IiBmaWxsPSIjMzAzNjNkIi8+PC9zdmc+');
+            border: 1px solid var(--border-color); /* 改為實線更有質感 */
+            overflow: hidden; /* 確保圖片不超出邊角 */
+        }
+
+        /* 確保圖片自適應容器高度與寬度 */
+        .map-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 圖片會自動填滿並裁切，不變形 */
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .map-preview img {
+            transform: scale(1.05); /* 滑鼠移上去時地圖微放大，增加互動感 */
         }
 
         footer {
@@ -182,7 +238,6 @@
             font-size: 12px;
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -193,23 +248,65 @@
 <body>
 
 <header>
-    <div class="competition-title">2026 Data Games｜TAMI 應用組</div>
-    <h1>試做賽任務 R1：受眾預測指揮中心</h1>
+    <div class="competition-title">2026 TWM Data Games｜TAMI 應用組</div>
+    <h1>初賽任務：誰來聽我的演唱會？</h1>
     <p class="mission-statement">
         「以未來行為預測為核心，考驗透過電信數據識別分眾行為的細膩洞察。」
     </p>
 </header>
 
 <div class="container">
-    <div class="grid">
+
+    <div class="protocol-box">
+        <div class="protocol-title">
+            <i class="fas fa-file-export"></i> 交件規範與格式說明 (Submission Rules)
+        </div>
+        <div class="protocol-grid">
+            <div class="protocol-item">
+                <i class="fas fa-sort-amount-down"></i>
+                <div>
+                    <strong>排序規則：</strong><br>
+                    請將預測信心度最高的 SubID 優先排在工作表上方。<br>
+                    <span class="important-note">※ 如提交數量超出限制，主辦單位將由上而下截取至上限名額為止。</span>
+                </div>
+            </div>
+            <div class="protocol-item">
+                <i class="fas fa-id-badge"></i>
+                <div>
+                    <strong>SubID 前綴要求：</strong><br>
+                    開頭請加上 G 或 P (G：月租型 / P：預付卡)。<br>
+                    <span class="important-note">※ 若未加上前綴將視為無效資料。</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="format-example">
+            <div style="font-size: 13px; color: var(--text-dim);">
+                <i class="fas fa-table"></i> <strong>SubID 合併範例 (從 TAMI 下載後請務必合併)：</strong>
+            </div>
+            <table class="subid-table">
+                <tr><th>Col A</th><th>Col B</th></tr>
+                <tr><td>G</td><td>64408636</td></tr>
+                <tr><td>G</td><td>71772800</td></tr>
+            </table>
+            <div class="arrow-icon"><i class="fas fa-long-arrow-alt-right"></i></div>
+            <table class="subid-table">
+                <tr><th style="background: var(--accent-green); color: white;">交件檔案 SubID 欄位</th></tr>
+                <tr><td>G64408636</td></tr>
+                <tr><td>G71772800</td></tr>
+            </table>
+        </div>
+    </div>
+
+      <div class="grid">
         
         <div class="card">
             <div class="card-header">
                 <span class="badge">大型挑戰</span>
-                <div class="venue-name">臺北大巨蛋 (Taipei Dome)</div>
+                <div class="venue-name">臺北大巨蛋 Taipei Dome</div>
             </div>
             <div class="card-content">
-                <div class="event-title">鄧紫棋「I AM GLORIA」世界巡迴演唱會</div>
+                <div class="event-title">鄧紫棋「I AM GLORIA」演唱會</div>
                 <div class="info-row"><i class="far fa-calendar"></i> 2026/04/09 – 04/12</div>
                 <div class="info-row"><i class="far fa-clock"></i> 18:00 開演 (預計)</div>
                 <div class="info-row"><i class="fas fa-users"></i> 預測上限：20,000 人</div>
@@ -219,22 +316,27 @@
                     <div class="criteria-item"><span class="criteria-label">指定時段</span><span class="criteria-value">開演後 3 小時內</span></div>
                     <div class="criteria-item"><span class="criteria-label">停留門檻</span><span class="criteria-value">90 分鐘以上</span></div>
                     <div class="criteria-item"><span class="criteria-label">訊號類型</span><span class="criteria-value">僅限室內基站</span></div>
-                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶 / 上班族</span></div>
+                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶、上班族</span></div>
                 </div>
 
-                <div class="map-preview">
-                    <i class="fas fa-map-marked-alt" style="margin-right:8px;"></i> 撈取範圍：臺北大巨蛋室內場館區
-                </div>
+<div class="card" style="animation-delay: 0.2s;">
+    <div class="criteria-box">
+        </div>
+
+    <div class="map-preview" style="padding: 0; overflow: hidden; height: auto;">
+        <img src="dome_map.png" alt="大巨蛋範圍圖" style="width: 100%; display: block; border-radius: 6px;">
+    </div>
+</div>
             </div>
         </div>
 
         <div class="card" style="animation-delay: 0.1s;">
             <div class="card-header">
                 <span class="badge" style="background: #bc8cff;">分眾精準</span>
-                <div class="venue-name">高雄流行音樂中心 KMC</div>
+                <div class="venue-name">高雄流行音樂中心 Kaohsiung Music Center</div>
             </div>
             <div class="card-content">
-                <div class="event-title">Apink「The Origin：APINK」Asia Tour</div>
+                <div class="event-title">Apink「The Origin」亞洲巡迴</div>
                 <div class="info-row"><i class="far fa-calendar"></i> 2026/04/11 (週六)</div>
                 <div class="info-row"><i class="far fa-clock"></i> 19:00 開演 (預計)</div>
                 <div class="info-row"><i class="fas fa-users"></i> 預測上限：3,000 人</div>
@@ -243,20 +345,25 @@
                     <span class="criteria-title">GROUND TRUTH 判定邏輯</span>
                     <div class="criteria-item"><span class="criteria-label">指定時段</span><span class="criteria-value">開演後 3 小時內</span></div>
                     <div class="criteria-item"><span class="criteria-label">停留門檻</span><span class="criteria-value">90 分鐘以上</span></div>
-                    <div class="criteria-item"><span class="criteria-label">訊號類型</span><span class="criteria-value">室內基站優先</span></div>
-                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶 / 高流工作者</span></div>
+                    <div class="criteria-item"><span class="criteria-label">訊號類型</span><span class="criteria-value">僅限室內基站</span></div>
+                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶、上班族</span></div>
                 </div>
 
-                <div class="map-preview">
-                    <i class="fas fa-map-marked-alt" style="margin-right:8px;"></i> 撈取範圍：海音館 (Hi-Ing Hall)
-                </div>
+<div class="card" style="animation-delay: 0.2s;">
+    <div class="criteria-box">
+        </div>
+
+    <div class="map-preview" style="padding: 0; overflow: hidden; height: auto;">
+        <img src="kmc_map.png" alt="高流範圍圖" style="width: 100%; display: block; border-radius: 6px;">
+    </div>
+</div>
             </div>
         </div>
 
         <div class="card" style="animation-delay: 0.2s;">
             <div class="card-header">
                 <span class="badge" style="background: #ffa657;">經典洞察</span>
-                <div class="venue-name">台北流行音樂中心 (TMC)</div>
+                <div class="venue-name">台北流行音樂中心 Taipei Music Center</div>
             </div>
             <div class="card-content">
                 <div class="event-title">游鴻明「敵不過想念」演唱會</div>
@@ -268,13 +375,18 @@
                     <span class="criteria-title">GROUND TRUTH 判定邏輯</span>
                     <div class="criteria-item"><span class="criteria-label">指定時段</span><span class="criteria-value">開演後 3 小時內</span></div>
                     <div class="criteria-item"><span class="criteria-label">停留門檻</span><span class="criteria-value">90 分鐘以上</span></div>
-                    <div class="criteria-item"><span class="criteria-label">訊號類型</span><span class="criteria-value">室內基站</span></div>
-                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶 / 上班族</span></div>
+                    <div class="criteria-item"><span class="criteria-label">訊號類型</span><span class="criteria-value">僅限室內基站</span></div>
+                    <div class="criteria-item"><span class="criteria-label">排除對象</span><span class="criteria-value">住戶、上班族</span></div>
                 </div>
 
-                <div class="map-preview">
-                    <i class="fas fa-map-marked-alt" style="margin-right:8px;"></i> 撈取範圍：北流表演廳
-                </div>
+<div class="card" style="animation-delay: 0.2s;">
+    <div class="criteria-box">
+        </div>
+
+    <div class="map-preview" style="padding: 0; overflow: hidden; height: auto;">
+        <img src="tmc_map.png" alt="北流範圍圖" style="width: 100%; display: block; border-radius: 6px;">
+    </div>
+</div>
             </div>
         </div>
 
@@ -282,8 +394,8 @@
 </div>
 
 <footer>
-    © 2026 TAMI Platform Team | 數據競賽小組製作<br>
-    本網頁資訊僅供內部試做賽使用
+    © 2026 TWM 數據大賽｜數據研究暨管理室｜競賽小組製作<br>
+    本網頁資訊僅供台灣大哥大 TWM 內部使用，嚴禁轉傳
 </footer>
 
 </body>
